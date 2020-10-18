@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <record id="view_contract_template_form_field" model="ir.ui.view">
+            <field name="name">contract.template.form</field>
+            <field name="model">contract.template</field>
+            <field name="arch" type="xml">
+                <form string="Contract Template Form">
+                    <group>
+                        <field name="name"/>
+                        <field name="allowance_ids"/>
+                        <field name="deduction_ids"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_contract_template_tree" model="ir.ui.view">
+            <field name="name">contract.template.tree</field>
+            <field name="model">contract.template</field>
+            <field name="arch" type="xml">
+                <tree string="Contract Template Tree">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="open_module_tree_contract_template" model="ir.actions.act_window">
+            <field name="name">Contract Template</field>
+            <field name="res_model">contract.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Contract Template
+                </p><p>
+                Create a new Contract Template
+            </p>
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_contract_template_tree"
+                action="open_module_tree_contract_template"
+                parent="hr_rules.menu_hr_template_base"
+                sequence="1"
+                groups="base.group_user"/>
+
+        <!--  Contract Edit-->
+
+        <record model="ir.ui.view" id="sutherland_contact_view_fields_form">
+            <field name="name">sutherland.hr.contract.fields.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group[2]/field[@name='job_id']" position="after">
+                    <field name="contract_template_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

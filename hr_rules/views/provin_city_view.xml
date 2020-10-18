@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <!--Provin City Part-->
+        <record id="view_provin_city_form_view" model="ir.ui.view">
+            <field name="name">provin.city.mode.tree.view</field>
+            <field name="model">provin.city.mode</field>
+            <field name="arch" type="xml">
+                <form string="Provin City Form">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_provin_city_tree_view" model="ir.ui.view">
+            <field name="name">provin.city.mode.tree.view</field>
+            <field name="model">provin.city.mode</field>
+            <field name="arch" type="xml">
+                <tree string="Provin city Tree">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        <record id="open_module_tree_provin_city" model="ir.actions.act_window">
+            <field name="name">Provin city</field>
+            <field name="res_model">provin.city.mode</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Provin city
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_hr_department_tree"
+                action="open_module_tree_provin_city"
+                parent="hr.menu_human_resources_configuration"
+                sequence="7"
+                groups="base.group_user"/>
+    </data>
+</odoo>
