@@ -5,11 +5,18 @@
             <field name="model">contract.template</field>
             <field name="arch" type="xml">
                 <form string="Contract Template Form">
-                    <group>
-                        <field name="name"/>
-                        <field name="allowance_ids"/>
-                        <field name="deduction_ids"/>
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="allowance_ids"/>
+                            <field name="deduction_ids"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
                 </form>
             </field>
         </record>
