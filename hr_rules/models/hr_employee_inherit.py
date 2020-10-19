@@ -30,7 +30,7 @@ class HrEmployeeInherit(models.Model):
     def create(self, vals):
         if vals.get('registration_number', '/') == '/':
                 vals['registration_number'] = self.env['ir.sequence'].next_by_code('employee.number') or '/'
-        result = super(HrEmployee, self).create(vals)
+        result = super(HrEmployeeInherit, self).create(vals)
 
         return result
 

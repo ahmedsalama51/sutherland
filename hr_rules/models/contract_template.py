@@ -38,3 +38,24 @@ class HrContractInherit(models.Model):
 
     contract_template_id = fields.Many2one('contract.template', string='Contract Template',
                                            track_visibility='onchange')
+    
+    def load_template_details(self):
+        """
+        Load lines of contract template allowance and deduction
+        """
+        for contract in self:
+            print("CONTRACT:: ", contract, contract.contract_template_id)
+            if contract.contract_template_id:
+                if contract.contract_template_id.allowance_ids:
+                    contract.allowance_ids = [(6, 0, contract.contract_template_id.allowance_ids.ids)]
+                else:
+                    contract.allowance_ids = [[5]]
+                if contract.contract_template_id.deduction_ids:
+                    contract.deduction_ids = [(6, 0, contract.contract_template_id.deduction_ids.ids)]
+                else:
+                    contract.allowance_ids = [[5]]
+
+    allowance_ids = fields.Many2many('allowance.hr', 'contract_allowance_rel',
+                                     'contract_id', 'allowance_id', string='Allowances', track_visibility='onchange')
+    deduction_ids = fields.Many2many('deduction.hr', 'contract_deduction_rel',
+                                     'contract_id', 'deduction_id', string='Deductions', track_visibility='onchange')
