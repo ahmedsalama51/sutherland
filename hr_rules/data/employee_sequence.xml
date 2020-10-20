@@ -4,12 +4,9 @@
         <record id="sequence_employee_number_custom" model="ir.sequence">
             <field name="name">Employee Number</field>
             <field name="code">employee.number</field>
-            <field name="active">TRUE</field>
-            <field name="prefix"></field>
-            <field name="padding">6</field>
+            <field name="padding">5</field>
             <field name="number_next_actual">623</field>
             <field name="number_increment">1</field>
-            <field name="implementation">standard</field>
         </record>
     </data>
 </odoo>

@@ -81,36 +81,23 @@ class HrBonusPenalty(models.Model):
 		bonus_other = self.env.ref('egymentors_hr.bonus_other')
 		# Penalty
 		penalty_other = self.env.ref('egymentors_hr.penalty_other')
-		penalty_penalty = self.env.ref('egymentors_hr.penalty_penalty')
+		penalty_ramadan = self.env.ref('egymentors_hr.penalty_ramadan')
 		penalty_absence = self.env.ref('egymentors_hr.penalty_absence')
-		penalty_sick = self.env.ref('egymentors_hr.penalty_sick')
-		penalty_unpaid = self.env.ref('egymentors_hr.penalty_unpaid')
-		penalty_spare_part = self.env.ref('egymentors_hr.penalty_spare_part')
-		penalty_expenditure = self.env.ref('egymentors_hr.penalty_expenditure')
-		penalty_impairment = self.env.ref('egymentors_hr.penalty_impairment')
-		penalty_fixed = self.env.ref('egymentors_hr.penalty_fixed')
+		penalty_advanced = self.env.ref('egymentors_hr.penalty_advanced')
+		
 		for rec in self:
 			rec.total_bonuses = sum(l.amount for l in rec.line_ids)
-			rec.total_penalties = sum(l.days_num for l in rec.line_ids)
 			# Penalty
-			rec.total_penalties_other = sum(l.days_num for l in
-			                                rec.line_ids.filtered(lambda x: x.type_id == penalty_other))
-			rec.total_penalties_penalty = sum(l.days_num for l in
-			                                  rec.line_ids.filtered(lambda x: x.type_id == penalty_penalty))
-			rec.total_penalties_absence = sum(l.days_num for l in
-			                                  rec.line_ids.filtered(lambda x: x.type_id == penalty_absence))
-			rec.total_penalties_sick = sum(l.days_num for l in
-			                               rec.line_ids.filtered(lambda x: x.type_id == penalty_sick))
-			rec.total_penalty_unpaid = sum(l.days_num for l in
-			                               rec.line_ids.filtered(lambda x: x.type_id == penalty_unpaid))
-			rec.total_penalty_spare_part = sum(l.days_num for l in
-			                                   rec.line_ids.filtered(lambda x: x.type_id == penalty_spare_part))
-			rec.total_penalty_expenditure = sum(l.days_num for l in
-			                                    rec.line_ids.filtered(lambda x: x.type_id == penalty_expenditure))
-			rec.total_penalty_impairment = sum(l.days_num for l in
-			                                   rec.line_ids.filtered(lambda x: x.type_id == penalty_impairment))
-			rec.total_penalty_fixed = sum(l.days_num for l in
-			                              rec.line_ids.filtered(lambda x: x.type_id == penalty_fixed))
+			rec.total_penalty_other = sum(l.days_num for l in
+			                              rec.line_ids.filtered(lambda x: x.type_id == penalty_other))
+			rec.total_penalty_ramadan = sum(l.days_num for l in
+			                                rec.line_ids.filtered(lambda x: x.type_id == penalty_ramadan))
+			rec.total_penalty_absence = sum(l.days_num for l in
+			                                rec.line_ids.filtered(lambda x: x.type_id == penalty_absence))
+			rec.total_penalty_advanced = sum(l.days_num for l in
+			                                 rec.line_ids.filtered(lambda x: x.type_id == penalty_advanced))
+			rec.total_penalties = sum(l.days_num for l in
+			                          rec.line_ids.filtered(lambda x: x.extra_type == 'penalty'))
 			# Bonus
 			# Allowance
 			rec.total_bonus_production = sum(l.amount for l in
@@ -139,8 +126,8 @@ class HrBonusPenalty(models.Model):
 			rec.total_bonus_other = sum(l.amount for l in
 			                            rec.line_ids.filtered(lambda x: x.type_id == bonus_other))
 			
-			rec.total_bonuses_rewards = rec.total_bonuses_allowance = sum(l.amount for l in
-			                                  rec.line_ids.filtered(lambda x: x.type_id.bonus_type == 'rewards'))
+			rec.total_bonuses_rewards = sum(l.amount for l in
+			                                rec.line_ids.filtered(lambda x: x.type_id.bonus_type == 'rewards'))
 	
 	@api.onchange('work_location_id', 'extra_type', 'bonus_type')
 	def generate_employee_ids(self):
@@ -179,17 +166,12 @@ class HrBonusPenalty(models.Model):
 	total_bonus_other = fields.Float("Other", compute=_get_total_bonus_penalty)
 	
 	total_penalties = fields.Float("Total Penalties", compute=_get_total_bonus_penalty)
-	total_penalties_sick = fields.Float("Sick", compute=_get_total_bonus_penalty)
-	total_penalties_other = fields.Float("Other", compute=_get_total_bonus_penalty)
-	total_penalties_penalty = fields.Float("Penalty", compute=_get_total_bonus_penalty)
-	total_penalties_absence = fields.Float("Absence", compute=_get_total_bonus_penalty)
-	total_penalty_unpaid = fields.Float("Unpaid", compute=_get_total_bonus_penalty)
-	total_penalty_spare_part = fields.Float("Spare Part", compute=_get_total_bonus_penalty)
-	total_penalty_expenditure = fields.Float("Expenditure", compute=_get_total_bonus_penalty)
-	total_penalty_impairment = fields.Float("Impairment", compute=_get_total_bonus_penalty)
-	total_penalty_fixed = fields.Float("Fixed Amount", compute=_get_total_bonus_penalty)
-
-
+	total_penalty_absence = fields.Float("Absence", compute=_get_total_bonus_penalty)
+	total_penalty_other = fields.Float("Other", compute=_get_total_bonus_penalty)
+	total_penalty_ramadan = fields.Float("Ramadan", compute=_get_total_bonus_penalty)
+	total_penalty_advanced = fields.Float("Advanced Payment", compute=_get_total_bonus_penalty)
+	
+	
 class HrBonusPenaltyLine(models.Model):
 	_name = 'hr.bonus.penalty.line'
 	_description = "Hr Bonus/Penalty Line"

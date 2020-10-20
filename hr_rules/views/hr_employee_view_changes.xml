@@ -16,8 +16,8 @@
                 </xpath>
                 <xpath expr="/form/sheet/group/group[1]/field[@name='work_email']" position="after">
                     <field name="provin_city_id"/>
-                    <!--                <field name="location_type" widget="radio" options="{'horizontal': true}"/>-->
-                    <!--                <field name="insurance_type" widget="radio" options="{'horizontal': true}"/>-->
+                    <!--<field name="location_type" widget="radio" options="{'horizontal': true}"/>-->
+                    <!-- <field name="insurance_type" widget="radio" options="{'horizontal': true}"/>-->
                 </xpath>
                 <!-- <xpath expr="/form/sheet/notebook/page[@name='hr_settings']/group/group[1]/field[@name='user_id']" position="after">
                     <field name="registration_number"/>

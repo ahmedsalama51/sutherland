@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!--Type-->
     <record id="hr_bonus_penalty_type_form_view" model="ir.ui.view">
         <field name="name">hr.bonus.penalty.type.form.view</field>
         <field name="model">hr.bonus.penalty.type</field>
         <field name="arch" type="xml">
             <form string="Types">
                 <sheet>
+                    <div class="oe_name">
+                        <h1><field name="name"/></h1>
+                    </div>
                     <group>
-                        <group>
-                            <field name="name"/>
-                        </group>
-                        <group>
+                        <group col="4">
                             <field name="extra_type" options="{'horizontal': true}"/>
                             <field name="bonus_type" attrs="{'required':[('extra_type','!=','bonus')],
                             'invisible':[('extra_type','=','penalty')]}" options="{'horizontal': true}"/>
@@ -21,7 +22,38 @@
             </form>
         </field>
     </record>
-
+    <record id="hr_bonus_penalty_type_filter_view" model="ir.ui.view">
+        <field name="name">hr.bonus.penalty.type.filter.view</field>
+        <field name="model">hr.bonus.penalty.type</field>
+        <field name="arch" type="xml">
+            <search string="Bonus">
+                <field name="name"/>
+                <filter string="Bonuses" name="bonuses" domain="[('extra_type','=','bonus')]" />
+                <filter string="Penalties" name="penalties" domain="[('extra_type','=','penalty')]" />
+                <group expand="0" string="Group By">
+                    <filter string="Type" name="bonus_type" domain="[]" context="{'group_by':'bonus_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="act_hr_bonus_type" model="ir.actions.act_window">
+        <field name="name">Bonus Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.bonus.penalty.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('extra_type','=', 'bonus')]</field>
+        <field name="context">{'search_default_bonus_type': 1, 'default_extra_type': 'bonus'}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Add New Bonus Type
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_hr_bonus_type"
+              parent="hr.menu_human_resources_configuration"
+              action="act_hr_bonus_type"
+              sequence="12"/>
+    <!--Bonus-->
     <record id="hr_bonus_form_view" model="ir.ui.view">
         <field name="name">hr.bonus.form.view</field>
         <field name="model">hr.bonus.penalty</field>
@@ -54,7 +86,7 @@
                         </group>
                         <group>
                             <field name="bonus_type" required="1" />
-<!--                            <field name="work_location_id" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--                            <field name="work_location_id" attrs="{'readonly':[('state','!=','draft')]}"/>-->
                         </group>
                     </group>
                     <notebook>
@@ -65,9 +97,9 @@
                                       decoration-warning="state == 'cancel'"
                                       decoration-info="state == 'confirm'"
                                       decoration-success="state == 'done'">
-<!--
-                                           context="{'default_work_location_id': parent.work_location_id}"
-                                           domain="[('work_location_id','=',parent.work_location_id)]"-->
+                                    <!--
+                                                                               context="{'default_work_location_id': parent.work_location_id}"
+                                                                               domain="[('work_location_id','=',parent.work_location_id)]"-->
                                     <field name="employee_id"/>
                                     <field name="extra_type" invisible="1"/>
                                     <field name="date" invisible="1"/>
@@ -127,7 +159,7 @@
                 <field name="date"/>
                 <field name="bonus_type"/>
                 <field name="period_month"/>
-<!--                <field name="work_location_id"/>-->
+                <!--                <field name="work_location_id"/>-->
                 <field name="state"/>
             </tree>
         </field>
@@ -143,7 +175,7 @@
                 <group expand="0" string="Group By">
                     <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
                     <filter string="Period" name="period" domain="[]" context="{'group_by':'period_month'}"/>
-<!--                    <filter string="Work Location" name="work_location" domain="[]" context="{'group_by':'work_location_id'}"/>-->
+                    <!--                    <filter string="Work Location" name="work_location" domain="[]" context="{'group_by':'work_location_id'}"/>-->
                 </group>
             </search>
         </field>
@@ -169,22 +201,6 @@
               action="act_hr_bonus"
               sequence="2"/>
 
-    <record id="act_hr_bonus_type" model="ir.actions.act_window">
-        <field name="name">Bonus Types</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">hr.bonus.penalty.type</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('extra_type','=', 'bonus')]</field>
-        <field name="context">{'default_extra_type': 'bonus'}</field>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Add New Bonus Type
-            </p>
-        </field>
-    </record>
-    <menuitem id="menu_hr_bonus_type"
-              parent="hr.menu_human_resources_configuration"
-              action="act_hr_bonus_type"
-              sequence="12"/>
+
 
 </odoo>

@@ -64,42 +64,22 @@
 
 
         <!-- Penalty Types-->
-        <record forcecreate="True" id="penalty_penalty" model="hr.bonus.penalty.type">
-            <field name="name">Penalty</field>
-            <field name="extra_type">penalty</field>
-        </record>
         <record forcecreate="True" id="penalty_absence" model="hr.bonus.penalty.type">
             <field name="name">Absence</field>
-            <field name="extra_type">penalty</field>
-        </record>
-        <record forcecreate="True" id="penalty_sick" model="hr.bonus.penalty.type">
-            <field name="name">Sick</field>
-            <field name="extra_type">penalty</field>
-        </record>
-        <record forcecreate="True" id="penalty_unpaid" model="hr.bonus.penalty.type">
-            <field name="name">unpaid</field>
             <field name="extra_type">penalty</field>
         </record>
         <record forcecreate="True" id="penalty_other" model="hr.bonus.penalty.type">
             <field name="name">Other</field>
             <field name="extra_type">penalty</field>
         </record>
-        <record forcecreate="True" id="penalty_spare_part" model="hr.bonus.penalty.type">
-            <field name="name">Spare Part</field>
+        <record forcecreate="True" id="penalty_ramadan" model="hr.bonus.penalty.type">
+            <field name="name">Ramadan</field>
             <field name="extra_type">penalty</field>
         </record>
-        <record forcecreate="True" id="penalty_expenditure" model="hr.bonus.penalty.type">
-            <field name="name">Expenditure</field>
+        <record forcecreate="True" id="penalty_advanced" model="hr.bonus.penalty.type">
+            <field name="name">Advanced Payment</field>
             <field name="extra_type">penalty</field>
         </record>
-        <record forcecreate="True" id="penalty_impairment" model="hr.bonus.penalty.type">
-            <field name="name">Impairment</field>
-            <field name="extra_type">penalty</field>
-        </record>
-        <record forcecreate="True" id="penalty_fixed" model="hr.bonus.penalty.type">
-            <field name="name">Fixed Amount</field>
-            <field name="extra_type">penalty</field>
-            <field name="fixed_amount">1</field>
-        </record>
+
     </data>
 </odoo>

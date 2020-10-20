@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import Warning
 
 
 class ContractTemplate(models.Model):
@@ -22,13 +23,13 @@ class AllowanceHr(models.Model):
 
     name = fields.Char(string='Allowance Type', track_visibility='onchange', require=True)
     value = fields.Float(string='Value', track_visibility='onchange', require=True)
-    code = fields.Char("Code", require=True)
+    code = fields.Char("Code", require=True, copy=False)
     
     @api.constrains('code')
     def _unique_code(self):
         for rec in self:
             if rec.code and isinstance(rec.id, int):
-                other_ids = self.env['allowance.hr'].search([('code', '=', rec.code), ('id', '=', rec.id)])
+                other_ids = self.env['allowance.hr'].search([('code', '=', rec.code), ('id', '!=', rec.id)])
                 if other_ids:
                     raise Warning(_("You can't have 2 allowance with same code"))
 
@@ -40,13 +41,13 @@ class DeductionHr(models.Model):
     
     name = fields.Char(string='Deduction Type', track_visibility='onchange', require=True)
     value = fields.Float(string='Value', track_visibility='onchange', require=True)
-    code = fields.Char("Code", require=True)
+    code = fields.Char("Code", require=True, copy=False)
 
     @api.constrains('code')
     def _unique_code(self):
         for rec in self:
             if rec.code and isinstance(rec.id, int):
-                other_ids = self.env['allowance.hr'].search([('code', '=', rec.code), ('id', '=', rec.id)])
+                other_ids = self.env['allowance.hr'].search([('code', '=', rec.code), ('id', '!=', rec.id)])
                 if other_ids:
                     raise Warning(_("You can't have 2 allowance with same code"))
     
@@ -62,7 +63,6 @@ class HrContractInherit(models.Model):
         Load lines of contract template allowance and deduction
         """
         for contract in self:
-            print("CONTRACT:: ", contract, contract.contract_template_id)
             if contract.contract_template_id:
                 if contract.contract_template_id.allowance_ids:
                     contract.allowance_ids = [(6, 0, contract.contract_template_id.allowance_ids.ids)]

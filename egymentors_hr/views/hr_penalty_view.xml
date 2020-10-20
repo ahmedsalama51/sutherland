@@ -63,15 +63,10 @@
                             </field>
                             <group class="oe_right">
                                 <group class="oe_subtotal_footer">
-                                    <field name="total_penalties_penalty" widget="monetary"/>
-                                    <field name="total_penalties_absence" widget="monetary"/>
-                                    <field name="total_penalties_sick" widget="monetary"/>
-                                    <field name="total_penalty_unpaid" widget="monetary"/>
-                                    <field name="total_penalties_other" widget="monetary"/>
-                                    <field name="total_penalty_spare_part" widget="monetary"/>
-                                    <field name="total_penalty_expenditure" widget="monetary"/>
-                                    <field name="total_penalty_impairment" widget="monetary"/>
-                                    <field name="total_penalty_fixed" widget="monetary"/>
+                                    <field name="total_penalty_absence" widget="monetary"/>
+                                    <field name="total_penalty_ramadan" widget="monetary"/>
+                                    <field name="total_penalty_advanced" widget="monetary"/>
+                                    <field name="total_penalty_other" widget="monetary"/>
                                     <field name="total_penalties" widget="monetary" class="oe_subtotal_footer_separator"/>
                                 </group>
                             </group>

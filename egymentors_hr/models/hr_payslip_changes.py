@@ -76,7 +76,7 @@ class HrPayslipInherit(models.Model):
 			                            rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_other))
 			
 			rec.total_bonuses_rewards = sum(l.amount for l in rec.hr_bonus_ids.
-			                                                              filtered(lambda x: x.type_id.bonus_type == 'rewards'))
+			                                filtered(lambda x: x.type_id.bonus_type == 'rewards'))
 	# Bonus Allowance
 	total_bonuses = fields.Float("Total Bonuses", compute=_get_total_bonus)
 	total_bonuses_allowance = fields.Float("Total Bonuses(Allowance)", compute=_get_total_bonus)
@@ -97,7 +97,7 @@ class HrPayslipInherit(models.Model):
 	# PENALTY PART
 	# ####################################################
 	def _get_hr_penalties(self):
-		penalty_fixed = self.env.ref('egymentors_hr.penalty_fixed')
+		# penalty_fixed = self.env.ref('egymentors_hr.penalty_fixed')
 		penalty_line_obj = self.env['hr.bonus.penalty.line']
 		for payslip in self:
 			if payslip.employee_id:
@@ -109,15 +109,15 @@ class HrPayslipInherit(models.Model):
 				if payslip.date_to:
 					domain.append(('date', '<=', payslip.date_to))
 				penalty_line_ids = penalty_line_obj.search(domain).mapped('id')
-				# Fixed Types
-				penalty_fixed_ids = penalty_line_obj.search([('type_id', '=', penalty_fixed.id),
-				                                             ('employee_id', '=', payslip.employee_id.id),
-				                                             ('state', '=', 'confirm'),
-				                                             ('date', '<=', payslip.date_from),
-				                                             ('date_to', '>=', payslip.date_from)])
-				if penalty_fixed_ids:
-					for l in penalty_fixed_ids:
-						penalty_line_ids.append(l.id)
+				# # Fixed Types
+				# penalty_fixed_ids = penalty_line_obj.search([('type_id', '=', penalty_fixed.id),
+				#                                              ('employee_id', '=', payslip.employee_id.id),
+				#                                              ('state', '=', 'confirm'),
+				#                                              ('date', '<=', payslip.date_from),
+				#                                              ('date_to', '>=', payslip.date_from)])
+				# if penalty_fixed_ids:
+				# 	for l in penalty_fixed_ids:
+				# 		penalty_line_ids.append(l.id)
 				payslip.write({'hr_penalty_ids': [(6, 0, penalty_line_ids)]})
 	
 	hr_penalty_ids = fields.One2many('hr.bonus.penalty.line', 'payslip_id', "Penalties",
@@ -126,47 +126,28 @@ class HrPayslipInherit(models.Model):
 	@api.onchange('hr_penalty_ids')
 	@api.depends('hr_penalty_ids.days_num')
 	def _get_total_penalty(self):
+		# Penalty
 		penalty_other = self.env.ref('egymentors_hr.penalty_other')
-		penalty_penalty = self.env.ref('egymentors_hr.penalty_penalty')
+		penalty_ramadan = self.env.ref('egymentors_hr.penalty_ramadan')
 		penalty_absence = self.env.ref('egymentors_hr.penalty_absence')
-		penalty_sick = self.env.ref('egymentors_hr.penalty_sick')
-		penalty_unpaid = self.env.ref('egymentors_hr.penalty_unpaid')
-		penalty_spare_part = self.env.ref('egymentors_hr.penalty_spare_part')
-		penalty_expenditure = self.env.ref('egymentors_hr.penalty_expenditure')
-		penalty_impairment = self.env.ref('egymentors_hr.penalty_impairment')
-		penalty_fixed = self.env.ref('egymentors_hr.penalty_fixed')
+		penalty_advanced = self.env.ref('egymentors_hr.penalty_advanced')
 		for rec in self:
 			rec.total_penalties = sum(l.days_num for l in rec.hr_penalty_ids)
 			# Penalty
-			rec.total_penalties_other = sum(l.days_num for l in
-			                                rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_other))
-			rec.total_penalties_penalty = sum(l.days_num for l in
-			                                  rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_penalty))
-			rec.total_penalties_absence = sum(l.days_num for l in
-			                                  rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_absence))
-			rec.total_penalties_sick = sum(l.days_num for l in
-			                               rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_sick))
-			rec.total_penalty_unpaid = sum(l.days_num for l in
-			                               rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_unpaid))
-			rec.total_penalty_spare_part = sum(l.days_num for l in
-			                                   rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_spare_part))
-			rec.total_penalty_expenditure = sum(l.days_num for l in
-			                                    rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_expenditure))
-			rec.total_penalty_impairment = sum(l.days_num for l in
-			                                   rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_impairment))
-			rec.total_penalty_fixed = sum(l.days_num for l in
-			                              rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_fixed))
+			rec.total_penalty_other = sum(l.days_num for l in
+			                              rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_other))
+			rec.total_penalty_absence = sum(l.days_num for l in
+			                                rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_absence))
+			rec.total_penalty_ramadan = sum(l.days_num for l in
+			                                rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_ramadan))
+			rec.total_penalty_advanced = sum(l.days_num for l in
+			                                 rec.hr_penalty_ids.filtered(lambda x: x.type_id == penalty_advanced))
 	
 	total_penalties = fields.Float("Total Penalties", compute=_get_total_penalty)
-	total_penalties_sick = fields.Float("Sick", compute=_get_total_penalty)
-	total_penalties_other = fields.Float("Other", compute=_get_total_penalty)
-	total_penalties_penalty = fields.Float("Penalty", compute=_get_total_penalty)
-	total_penalties_absence = fields.Float("Absence", compute=_get_total_penalty)
-	total_penalty_unpaid = fields.Float("Unpaid", compute=_get_total_penalty)
-	total_penalty_spare_part = fields.Float("Spare Part", compute=_get_total_penalty)
-	total_penalty_expenditure = fields.Float("Expenditure", compute=_get_total_penalty)
-	total_penalty_impairment = fields.Float("Impairment", compute=_get_total_penalty)
-	total_penalty_fixed = fields.Float("Fixed Amount", compute=_get_total_penalty)
+	total_penalty_other = fields.Float("Other", compute=_get_total_penalty)
+	total_penalty_absence = fields.Float("Absence", compute=_get_total_penalty)
+	total_penalty_ramadan = fields.Float("Ramadan", compute=_get_total_penalty)
+	total_penalty_advanced = fields.Float("Advanced", compute=_get_total_penalty)
 	
 	# Transportation Allowance PART
 	# ####################################################

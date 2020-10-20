@@ -72,18 +72,18 @@ class HrEmployeeInherit(models.Model):
 	medical_insurance_no = fields.Char(string='Medical Insurance No.')
 	medical_location = fields.Char(string='Medical Location')
 	
-	employee_no = fields.Char(string='Employee Registration Number', search='_get_search_list')
-	
-	def _get_search_list(self, operator, value):
-		# print("------------------- On Search List -----------------")
-		# print("VALS:: ",operator,value )
-		if operator == 'like':
-			operator = 'ilike'
-		employee_ids = self.env['hr.employee'].search([('registration_number', operator, value)]).mapped('id')
-		# print("Employee Ids:: ", employee_ids)
-		payslip_ids = self.env['hr.payslip'].search([('employee_id', 'in', employee_ids)]).mapped('id')
-		# ids = values
-		# print("Contract Ids:: ", payslip_ids)
-		return [('id', 'in', payslip_ids)]
+	# employee_no = fields.Char(string='Employee Registration Number', search='_get_search_list')
+	#
+	# def _get_search_list(self, operator, value):
+	# 	# print("------------------- On Search List -----------------")
+	# 	# print("VALS:: ",operator,value )
+	# 	if operator == 'like':
+	# 		operator = 'ilike'
+	# 	employee_ids = self.env['hr.employee'].search([('registration_number', operator, value)]).mapped('id')
+	# 	# print("Employee Ids:: ", employee_ids)
+	# 	payslip_ids = self.env['hr.payslip'].search([('employee_id', 'in', employee_ids)]).mapped('id')
+	# 	# ids = values
+	# 	# print("Contract Ids:: ", payslip_ids)
+	# 	return [('id', 'in', payslip_ids)]
 
 # Ahmed Salama Code End.

@@ -26,7 +26,7 @@
             <P >
                 <b>lines = contract.allowance_ids/deduction_ids</b> <i style="color:green"># For getting the field we need</i><br/>
                 <i style="color:green"># Then we will filter for the exact line using code.</i> <br/>
-                <b>line = lines.filtered(l: l.code == '<i style="color:red;">CODE</i>')</b><br/>
+                <b>line = lines.search([('id','in',lines.ids),('code','=','<i style="color:red;">CODE</i>')])</b><br/>
                 <i style="color:green"># Then get exact amount of line</i> <br/>
                 <b>result = line and line.value or 0.0</b><br/>
             </P>
