@@ -11,12 +11,14 @@
                             <field name="allowance_ids">
                                 <tree editable="bottom">
                                     <field name="name"/>
+                                    <field name="code" readonly="1"/>
                                     <field name="value" readonly="1" sum="allowance"/>
                                 </tree>
                             </field>
                             <field name="deduction_ids">
                                 <tree editable="bottom">
                                     <field name="name"/>
+                                    <field name="code" readonly="1"/>
                                     <field name="value" readonly="1" sum="deductions"/>
                                 </tree>
                             </field>
@@ -81,6 +83,7 @@
                                 <field name="allowance_ids">
                                     <tree editable="bottom">
                                         <field name="name"/>
+                                        <field name="code" readonly="1"/>
                                         <field name="value" readonly="1" sum="allowance"/>
                                     </tree>
                                 </field>
@@ -104,6 +107,7 @@
                                 <field name="deduction_ids">
                                     <tree editable="bottom">
                                         <field name="name"/>
+                                        <field name="code" readonly="1"/>
                                         <field name="value" readonly="1" sum="deductions"/>
                                     </tree>
                                 </field>

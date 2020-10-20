@@ -4,7 +4,7 @@
             <field name="name">hr.location.form</field>
             <field name="model">hr.location</field>
             <field name="arch" type="xml">
-                <form string="Location Form">
+                <form string="Program">
                     <sheet>
                         <group col="4">
                             <field name="name"/>
@@ -23,29 +23,32 @@
             <field name="name">hr.location.tree</field>
             <field name="model">hr.location</field>
             <field name="arch" type="xml">
-                <tree string="Location Tree">
+                <tree string="Program">
                     <field name="name"/>
                     <field name="code"/>
                 </tree>
             </field>
         </record>
         
-        <record id="open_module_tree_location" model="ir.actions.act_window">
-            <field name="name">Work Locations</field>
+        <record id="action_module_tree_location" model="ir.actions.act_window">
+            <field name="name">Programs</field>
             <field name="res_model">hr.location</field>
             <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_location_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_location_form')})]"/>
             <field name="help" type="html">
               <p class="o_view_nocontent_smiling_face">
-                Create a new Work Location
+                Create a new Program
               </p><p>
-                Odoo's Work location is used to manage loactions of work for each employee.
+               Program is used to manage locations of work for each employee.
               </p>
             </field>
         </record>
         
         <menuitem
-                id="menu_hr_location_tree"
-                action="open_module_tree_location"
+                id="hr_location_tree_menu"
+                action="action_module_tree_location"
                 parent="hr.menu_human_resources_configuration"
                 sequence="6"
                 groups="base.group_user"/>

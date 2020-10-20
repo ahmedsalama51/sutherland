@@ -11,11 +11,16 @@ class HrEmployeeInherit(models.Model):
 	
 	location_type = fields.Selection([('static', 'Static'),
 	                                  ('dynamic', 'Dynamic'),
-	                                  ('management', 'Management')], string="Location Type",
-	                                 required=True, default='static')
+	                                  ('management', 'Management')], string="Location Type")
+	
+	insurance_type = fields.Selection([('foreigner', 'Foreigner'),
+	                                   ('insured', 'Insured'), ('out_insurance', 'Outside Insurance'),
+	                                   ('pension', 'Pension')], string="Insurance",
+	                                  required=True, default='insured')
+	employee_status = fields.Text("Employee Status")
 	
 	tax_base = fields.Float(string='Tax Base', default=0)
-	work_location_id = fields.Many2one('hr.location', 'Work Location Ertrac')
+	work_location_id = fields.Many2one('hr.location', 'Program')
 	
 	def Daily_Check_Value(self):
 		
@@ -67,7 +72,7 @@ class HrEmployeeInherit(models.Model):
 	medical_insurance_no = fields.Char(string='Medical Insurance No.')
 	medical_location = fields.Char(string='Medical Location')
 	
-	employee_no = fields.Char(string='Employee Registration Number', search='_get_search_list', store=False)
+	employee_no = fields.Char(string='Employee Registration Number', search='_get_search_list')
 	
 	def _get_search_list(self, operator, value):
 		# print("------------------- On Search List -----------------")

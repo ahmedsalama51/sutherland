@@ -15,8 +15,13 @@
                 <form string="Allowance Form">
                     <sheet>
                         <group>
-                            <field name="name"/>
-                            <field name="value"/>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="value"/>
+                            </group>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -33,6 +38,7 @@
             <field name="arch" type="xml">
                 <tree string="Allowance Tree">
                     <field name="name"/>
+                    <field name="code"/>
                     <field name="value"/>
                 </tree>
             </field>
@@ -64,8 +70,13 @@
                 <form string="Deduction Form">
                     <sheet>
                         <group>
-                            <field name="name"/>
-                            <field name="value"/>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="value"/>
+                            </group>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -82,12 +93,11 @@
             <field name="arch" type="xml">
                 <tree string="Deduction Tree">
                     <field name="name"/>
+                    <field name="code"/>
                     <field name="value"/>
                 </tree>
             </field>
         </record>
-
-
         <record id="open_module_tree_deductions_hr" model="ir.actions.act_window">
             <field name="name">Deductions</field>
             <field name="res_model">deduction.hr</field>
@@ -100,7 +110,6 @@
             </p>
             </field>
         </record>
-
 
         <menuitem
                 id="menu_hr_deduction_tree"

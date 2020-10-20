@@ -33,16 +33,19 @@ class HrPayslipInherit(models.Model):
 	@api.onchange('hr_bonus_ids')
 	@api.depends('hr_bonus_ids.amount')
 	def _get_total_bonus(self):
+		# Bonus Allowance
 		bonus_production = self.env.ref('egymentors_hr.bonus_production')
 		bonus_leadership = self.env.ref('egymentors_hr.bonus_leadership')
 		bonus_board_of_direction = self.env.ref('egymentors_hr.bonus_board_of_direction')
 		bonus_workshop = self.env.ref('egymentors_hr.bonus_workshop')
-		bonus_efforts = self.env.ref('egymentors_hr.bonus_efforts')
-		bonus_rewards = self.env.ref('egymentors_hr.bonus_rewards')
-		bonus_transportation = self.env.ref('egymentors_hr.bonus_transportation')
-		bonus_travel = self.env.ref('egymentors_hr.bonus_travel')
-		bonus_additional = self.env.ref('egymentors_hr.bonus_additional')
-		bonus_feeding = self.env.ref('egymentors_hr.bonus_feeding')
+		# Bonus Reward
+		bonus_comp_off_site = self.env.ref('egymentors_hr.bonus_comp_off_site')
+		bonus_comp_off_home = self.env.ref('egymentors_hr.bonus_comp_off_home')
+		bonus_overtime_site = self.env.ref('egymentors_hr.bonus_overtime_site')
+		bonus_overtime_home = self.env.ref('egymentors_hr.bonus_overtime_home')
+		bonus_vpp = self.env.ref('egymentors_hr.bonus_vpp')
+		bonus_ramadan = self.env.ref('egymentors_hr.bonus_ramadan')
+		bonus_other = self.env.ref('egymentors_hr.bonus_other')
 		for rec in self:
 			rec.total_bonuses = sum(l.amount for l in rec.hr_bonus_ids)
 			# Allowance
@@ -55,23 +58,26 @@ class HrPayslipInherit(models.Model):
 			rec.total_bonus_direction = sum(l.amount for l in
 			                                rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_board_of_direction))
 			rec.total_bonuses_allowance = sum(l.amount for l in
-			                                  rec.hr_bonus_ids.filtered(lambda x:x.type_id.bonus_type == 'allowance'))
+			                                  rec.hr_bonus_ids.filtered(lambda x: x.type_id.bonus_type == 'allowance'))
 			# Rewards
-			rec.total_bonus_efforts = sum(l.amount for l in
-			                              rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_efforts))
-			rec.total_bonus_rewards = sum(l.amount for l in
-			                              rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_rewards))
-			rec.total_bonus_transportation = sum(l.amount for l in
-			                                     rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_transportation))
-			rec.total_bonus_travel = sum(l.amount for l in
-			                             rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_travel))
-			rec.total_bonus_additional = sum(l.amount for l in
-			                                 rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_additional))
-			rec.total_bonus_feeding = sum(l.amount for l in
-			                              rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_feeding))
-			rec.total_bonuses_rewards = sum(l.amount for l in
-			                                rec.hr_bonus_ids.filtered(lambda x:x.type_id.bonus_type == 'rewards'))
-	
+			rec.total_bonus_comp_off_site = sum(l.amount for l in
+			                                    rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_comp_off_site))
+			rec.total_bonus_comp_off_home = sum(l.amount for l in
+			                                    rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_comp_off_home))
+			rec.total_bonus_overtime_site = sum(l.amount for l in
+			                                    rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_overtime_site))
+			rec.total_bonus_overtime_home = sum(l.amount for l in
+			                                    rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_overtime_home))
+			rec.total_bonus_vpp = sum(l.amount for l in
+			                          rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_vpp))
+			rec.total_bonus_ramadan = sum(l.amount for l in
+			                              rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_ramadan))
+			rec.total_bonus_other = sum(l.amount for l in
+			                            rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_other))
+			
+			rec.total_bonuses_rewards = sum(l.amount for l in rec.hr_bonus_ids.
+			                                                              filtered(lambda x: x.type_id.bonus_type == 'rewards'))
+	# Bonus Allowance
 	total_bonuses = fields.Float("Total Bonuses", compute=_get_total_bonus)
 	total_bonuses_allowance = fields.Float("Total Bonuses(Allowance)", compute=_get_total_bonus)
 	total_bonuses_rewards = fields.Float("Total Bonuses(Rewards)", compute=_get_total_bonus)
@@ -79,13 +85,14 @@ class HrPayslipInherit(models.Model):
 	total_bonus_leadership = fields.Float("Leadership", compute=_get_total_bonus)
 	total_bonus_workshop = fields.Float("Workshop", compute=_get_total_bonus)
 	total_bonus_direction = fields.Float("Board of Direction", compute=_get_total_bonus)
-	total_bonus_efforts = fields.Float("Efforts", compute=_get_total_bonus)
-	total_bonus_rewards = fields.Float("Rewords", compute=_get_total_bonus)
-	total_bonus_transportation = fields.Float("Transportation", compute=_get_total_bonus)
-	total_bonus_travel = fields.Float("Travel", compute=_get_total_bonus)
-	total_bonus_additional = fields.Float("Additional", compute=_get_total_bonus)
-	total_bonus_feeding = fields.Float("Feeding", compute=_get_total_bonus)
-	total_bonus_other = fields.Float("Other")
+	# Bonus Rewards
+	total_bonus_comp_off_site = fields.Float("Comp Off Site", compute=_get_total_bonus)
+	total_bonus_comp_off_home = fields.Float("Comp Off Home", compute=_get_total_bonus)
+	total_bonus_overtime_site = fields.Float("OverTime Site", compute=_get_total_bonus)
+	total_bonus_overtime_home = fields.Float("OverTime Home", compute=_get_total_bonus)
+	total_bonus_vpp = fields.Float("VPP", compute=_get_total_bonus)
+	total_bonus_ramadan = fields.Float("Ramadan", compute=_get_total_bonus)
+	total_bonus_other = fields.Float("Other", compute=_get_total_bonus)
 	
 	# PENALTY PART
 	# ####################################################

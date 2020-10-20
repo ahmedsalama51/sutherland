@@ -24,12 +24,14 @@
                             <field name="total_bonus_workshop" widget="monetary"/>
                             <field name="total_bonus_direction" widget="monetary"/>
                             <field name="total_bonuses_allowance" widget="monetary" class="oe_subtotal_footer_separator"/>
-                            <field name="total_bonus_efforts" widget="monetary"/>
-                            <field name="total_bonus_rewards" widget="monetary"/>
-                            <field name="total_bonus_transportation" widget="monetary"/>
-                            <field name="total_bonus_travel" widget="monetary"/>
-                            <field name="total_bonus_additional" widget="monetary"/>
-                            <field name="total_bonus_feeding" widget="monetary"/>
+
+                            <field name="total_bonus_comp_off_site" widget="monetary"/>
+                            <field name="total_bonus_comp_off_home" widget="monetary"/>
+                            <field name="total_bonus_overtime_site" widget="monetary"/>
+                            <field name="total_bonus_overtime_home" widget="monetary"/>
+                            <field name="total_bonus_vpp" widget="monetary"/>
+                            <field name="total_bonus_ramadan" widget="monetary"/>
+                            <field name="total_bonus_other" widget="monetary"/>
                             <field name="total_bonuses_rewards" widget="monetary" class="oe_subtotal_footer_separator"/>
 
                             <field name="total_bonuses" widget="monetary" class="oe_subtotal_footer_separator"/>

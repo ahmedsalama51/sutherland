@@ -5,11 +5,13 @@
             <field name="name">provin.city.mode.tree.view</field>
             <field name="model">provin.city.mode</field>
             <field name="arch" type="xml">
-                <form string="Provin City Form">
-                    <group>
-                        <field name="name"/>
-                        <field name="code"/>
-                    </group>
+                <form string="Billability">
+                    <sheet>
+                        <group col="4">
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -17,26 +19,29 @@
             <field name="name">provin.city.mode.tree.view</field>
             <field name="model">provin.city.mode</field>
             <field name="arch" type="xml">
-                <tree string="Provin city Tree">
+                <tree string="Billability">
                     <field name="name"/>
                     <field name="code"/>
                 </tree>
             </field>
         </record>
-        <record id="open_module_tree_provin_city" model="ir.actions.act_window">
-            <field name="name">Provin city</field>
+        <record id="action_module_tree_provin_city" model="ir.actions.act_window">
+            <field name="name">Billability</field>
             <field name="res_model">provin.city.mode</field>
             <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_provin_city_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_provin_city_form_view')})]"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Create a new Provin city
+                    Create a new Billability
                 </p>
             </field>
         </record>
 
         <menuitem
-                id="menu_hr_department_tree"
-                action="open_module_tree_provin_city"
+                id="hr_department_tree_menu"
+                action="action_module_tree_provin_city"
                 parent="hr.menu_human_resources_configuration"
                 sequence="7"
                 groups="base.group_user"/>

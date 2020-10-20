@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 
 class ContractTemplate(models.Model):
@@ -20,8 +20,17 @@ class AllowanceHr(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "HR Contract Template Allowance"
 
-    name = fields.Char(string='Allowance Type', track_visibility='onchange')
-    value = fields.Float(string='Value', track_visibility='onchange')
+    name = fields.Char(string='Allowance Type', track_visibility='onchange', require=True)
+    value = fields.Float(string='Value', track_visibility='onchange', require=True)
+    code = fields.Char("Code", require=True)
+    
+    @api.constrains('code')
+    def _unique_code(self):
+        for rec in self:
+            if rec.code and isinstance(rec.id, int):
+                other_ids = self.env['allowance.hr'].search([('code', '=', rec.code), ('id', '=', rec.id)])
+                if other_ids:
+                    raise Warning(_("You can't have 2 allowance with same code"))
 
 
 class DeductionHr(models.Model):
@@ -29,8 +38,17 @@ class DeductionHr(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "HR Contract Template Deductions"
     
-    name = fields.Char(string='Deduction Type', track_visibility='onchange')
-    value = fields.Float(string='Value', track_visibility='onchange')
+    name = fields.Char(string='Deduction Type', track_visibility='onchange', require=True)
+    value = fields.Float(string='Value', track_visibility='onchange', require=True)
+    code = fields.Char("Code", require=True)
+
+    @api.constrains('code')
+    def _unique_code(self):
+        for rec in self:
+            if rec.code and isinstance(rec.id, int):
+                other_ids = self.env['allowance.hr'].search([('code', '=', rec.code), ('id', '=', rec.id)])
+                if other_ids:
+                    raise Warning(_("You can't have 2 allowance with same code"))
     
     
 class HrContractInherit(models.Model):

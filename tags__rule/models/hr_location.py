@@ -5,6 +5,7 @@ from odoo import models, fields
 
 class HrLocation(models.Model):
     _name = 'hr.location'
+    _description = "Program"
     _inherit = ['mail.thread']
     
     name = fields.Char(string="Work Location", required=True)
