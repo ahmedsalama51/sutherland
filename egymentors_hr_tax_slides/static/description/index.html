@@ -28,19 +28,21 @@
         <div class="oe_span9">
             <p class="oe_mt32">
                 <b style="color:blue">To be used on salary rule copy/past this on python code field on salary rule:</b><br>
-                <P style="color:green">
-                    amount = categories.GROSS # For example get GROSS to handle<br/>
-                    # Search for lines that is satisfied amount conditions. <br/>
-                    slides = payslip.env['hr.tax.slide'].search([('max_amount','<=',amount)])<br/>
-                    # This will search for slides which is below you amount and loop them to calc. tax amount, then get it's sum <br/>
-                    result = slides and slides.compute_tax_amount(amount) or 0.0<br/>
-                    amount = categories.GROSS # For example get GROSS to handle<br/>
-                    # Search for lines that is satisfied amount conditions. <br/>
-                    taxedamount , slides = payslip.env['hr.tax.slide'].taxesStageLoop(self, amount)<br/>
-                    # This will search for slides which is below you amount and loop them to calc. tax amount, then get it's sum <br/>
-                    result = payslip.env['hr.tax.slide'].calculatedTotalTaxes(taxedamount,slides)<br/>
-                </P>
+                <b>amount = categories.GROSS</b> <i style="color:green"># For example get GROSS to handle</i><br/>
+                <i style="color:green"># Search for lines that is satisfied amount conditions.</i> <br/>
+                <b>slides = payslip.env['hr.tax.slide'].search([('max_amount','>=',amount)])</b><br/>
+                <i style="color:green"># This will search for slides which is below you amount and loop them to calc. tax amount, then get it's sum </i><br/>
+                <b>result = slides and slides.compute_tax_amount(amount) or 0.0</b><br/>
             </p>
+            <hr/>
+            <p>
+                <b style="color:red">This code isn't active until next stage:</b><br>
+                <b>amount = categories.GROSS</b> <i style="color:green"># For example get GROSS to handle</i><br/>
+                <i style="color:green"># Search for lines that is satisfied amount conditions.</i> <br/>
+                <b>taxedamount , slides = payslip.env['hr.tax.slide'].taxesStageLoop(self, amount)</b><br/>
+                <i style="color:green"># This will search for slides which is below you amount and loop them to calc. tax amount, then get it's sum</i>><br/>
+                <b>result = payslip.env['hr.tax.slide'].calculatedTotalTaxes(taxedamount,slides)</b><br/>
+            </P>
             <br/>
             <br/>
             <p>
