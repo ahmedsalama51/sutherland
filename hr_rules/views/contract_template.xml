@@ -82,9 +82,8 @@
                             <group name="allowance" string="Allowance">
                                 <field name="allowance_ids">
                                     <tree editable="bottom">
-                                        <field name="name"/>
-                                        <field name="code" readonly="1"/>
-                                        <field name="value" readonly="1" sum="allowance"/>
+                                        <field name="allowance_id"/>
+                                        <field name="value" sum="allowance"/>
                                     </tree>
                                 </field>
                                 <!--<field name="internal_transportation_value"/>-->
@@ -106,8 +105,7 @@
                             <group name="deduction" string="Deduction">
                                 <field name="deduction_ids">
                                     <tree editable="bottom">
-                                        <field name="name"/>
-                                        <field name="code" readonly="1"/>
+                                        <field name="deduction_id"/>
                                         <field name="value" readonly="1" sum="deductions"/>
                                     </tree>
                                 </field>

@@ -59,26 +59,26 @@
                         </group>
                     </group>
                 </page>
-                <page name="transportation" string="Transportation Allowance">
-                    <field name="hr_trans_lines_ids">
-                        <tree create="0">
-                            <field name="date" invisible="1"/>
-                            <field name="int_days_num" sum="int_days"/>
-                            <field name="int_amount" sum="int_amount"/>
-                            <field name="ext_days_num" invisible="1"/>
-                            <field name="ext_amount" sum="ext_amount"/>
-                            <field name="notes"/>
-                            <field name="state" invisible="1"/>
-                        </tree>
-                    </field>
-                    <group class="oe_right">
-                        <group class="oe_subtotal_footer">
-                            <field name="total_trans_internal" widget="monetary"/>
-                            <field name="total_trans_external" widget="monetary"/>
-                            <field name="total_trans_allowance" widget="monetary" class="oe_subtotal_footer_separator"/>
-                        </group>
-                    </group>
-                </page>
+<!--                <page name="transportation" string="Transportation Allowance">-->
+<!--                    <field name="hr_trans_lines_ids">-->
+<!--                        <tree create="0">-->
+<!--                            <field name="date" invisible="1"/>-->
+<!--                            <field name="int_days_num" sum="int_days"/>-->
+<!--                            <field name="int_amount" sum="int_amount"/>-->
+<!--                            <field name="ext_days_num" invisible="1"/>-->
+<!--                            <field name="ext_amount" sum="ext_amount"/>-->
+<!--                            <field name="notes"/>-->
+<!--                            <field name="state" invisible="1"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+<!--                    <group class="oe_right">-->
+<!--                        <group class="oe_subtotal_footer">-->
+<!--                            <field name="total_trans_internal" widget="monetary"/>-->
+<!--                            <field name="total_trans_external" widget="monetary"/>-->
+<!--                            <field name="total_trans_allowance" widget="monetary" class="oe_subtotal_footer_separator"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </page>-->
                 <page name="award_profit" string="Award Profit">
                     <field name="hr_award_profit_ids">
                         <tree create="0">
