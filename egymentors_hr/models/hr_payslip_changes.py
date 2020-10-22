@@ -46,6 +46,9 @@ class HrPayslipInherit(models.Model):
 		bonus_vpp = self.env.ref('egymentors_hr.bonus_vpp')
 		bonus_ramadan = self.env.ref('egymentors_hr.bonus_ramadan')
 		bonus_other = self.env.ref('egymentors_hr.bonus_other')
+		bonus_night_shift = self.env.ref('egymentors_hr.bonus_night_shift')
+		bonus_leave_balance = self.env.ref('egymentors_hr.bonus_leave_balance')
+		
 		for rec in self:
 			rec.total_bonuses = sum(l.amount for l in rec.hr_bonus_ids)
 			# Allowance
@@ -74,6 +77,10 @@ class HrPayslipInherit(models.Model):
 			                              rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_ramadan))
 			rec.total_bonus_other = sum(l.amount for l in
 			                            rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_other))
+			rec.total_bonus_night_shift = sum(l.amount for l in
+			                            rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_night_shift))
+			rec.total_bonus_leave_balance = sum(l.amount for l in
+			                            rec.hr_bonus_ids.filtered(lambda x: x.type_id == bonus_leave_balance))
 			
 			rec.total_bonuses_rewards = sum(l.amount for l in rec.hr_bonus_ids.
 			                                filtered(lambda x: x.type_id.bonus_type == 'rewards'))
@@ -93,6 +100,8 @@ class HrPayslipInherit(models.Model):
 	total_bonus_vpp = fields.Float("VPP", compute=_get_total_bonus)
 	total_bonus_ramadan = fields.Float("Ramadan", compute=_get_total_bonus)
 	total_bonus_other = fields.Float("Other", compute=_get_total_bonus)
+	total_bonus_night_shift = fields.Float("Night Shift", compute=_get_total_bonus)
+	total_bonus_leave_balance = fields.Float("Leave Balance", compute=_get_total_bonus)
 	
 	# PENALTY PART
 	# ####################################################

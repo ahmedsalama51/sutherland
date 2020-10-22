@@ -71,6 +71,14 @@ class HrContractInherit(models.Model):
 			if contract.contract_template_id.deduction_ids:
 				contract.deduction_ids = [(0, 0, {'deduction_id': line.id, 'value': line.value, 'contract_id': contract.id})
 				                          for line in contract.contract_template_id.deduction_ids]
+				
+	def bulk_load_template(self):
+		"""
+		Load Template for contract ids
+		"""
+		if self.env.context.get('active_ids'):
+			contract_ids = self.env['hr.contract'].browse(self.env.context.get('active_ids'))
+			contract_ids.load_template_details()
 	
 	allowance_ids = fields.One2many('hr.contract.allowance.line', 'contract_id', 'Allowances')
 	deduction_ids = fields.One2many('hr.contract.deduction.line', 'contract_id', 'Deductions')

@@ -15,7 +15,7 @@ class HrEmployeeInherit(models.Model):
 	
 	insurance_type = fields.Selection([('foreigner', 'Foreigner'),
 	                                   ('insured', 'Insured'), ('out_insurance', 'Outside Insurance'),
-	                                   ('pension', 'Pension')], string="Insurance",
+	                                   ('pension', 'Pension'), ('blacked', 'Blacked')], string="Insurance",
 	                                  required=True, default='insured')
 	employee_status = fields.Text("Employee Status")
 	

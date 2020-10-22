@@ -38,10 +38,11 @@ class HrTaxSlide(models.Model):
                               % (slc.priority, slc.max_amount))
 
     def compute_tax_amount(self, amount):
-        print("HERE: ", amount, self)
+        # print("HERE: ", amount, self)
         total_tax = 0.0
         for slide in self.sorted(lambda s: s.priority):
-            print("SLIDE: ", slide.max_amount)
+            # print("SLIDE: ", slide.max_amount)
+            flag = False  # this flag will be raised if one of those slides worked
             if amount <= slide.max_amount:
                 # print("--------- start ----------------")
                 # start to process amount
@@ -51,14 +52,18 @@ class HrTaxSlide(models.Model):
                 for line in slide.line_ids:
                     # print("-------------\nCOND: ", line.amount_from, process_amount, line.amount_to)
                     if process_amount >= line.line_amount:
+                        flag = True
                         tax = (line.line_amount * line.tax_percentage / 100)
                         # print("TAX: ", tax)
                         slide_taxes += tax
                         process_amount -= line.line_amount
                     else:
+                        # print("--Last Tax--")
                         slide_taxes += (process_amount * line.tax_percentage / 100)
                         break
                 total_tax += slide_taxes
+                if flag:
+                    break
         # print("total_tax: ", total_tax)
         return total_tax
 

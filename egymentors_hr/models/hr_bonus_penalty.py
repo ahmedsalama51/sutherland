@@ -79,6 +79,8 @@ class HrBonusPenalty(models.Model):
 		bonus_vpp = self.env.ref('egymentors_hr.bonus_vpp')
 		bonus_ramadan = self.env.ref('egymentors_hr.bonus_ramadan')
 		bonus_other = self.env.ref('egymentors_hr.bonus_other')
+		bonus_night_shift = self.env.ref('egymentors_hr.bonus_night_shift')
+		bonus_leave_balance = self.env.ref('egymentors_hr.bonus_leave_balance')
 		# Penalty
 		penalty_other = self.env.ref('egymentors_hr.penalty_other')
 		penalty_ramadan = self.env.ref('egymentors_hr.penalty_ramadan')
@@ -125,6 +127,10 @@ class HrBonusPenalty(models.Model):
 			                              rec.line_ids.filtered(lambda x: x.type_id == bonus_ramadan))
 			rec.total_bonus_other = sum(l.amount for l in
 			                            rec.line_ids.filtered(lambda x: x.type_id == bonus_other))
+			rec.total_bonus_night_shift = sum(l.amount for l in
+			                            rec.line_ids.filtered(lambda x: x.type_id == bonus_night_shift))
+			rec.total_bonus_leave_balance = sum(l.amount for l in
+			                            rec.line_ids.filtered(lambda x: x.type_id == bonus_leave_balance))
 			
 			rec.total_bonuses_rewards = sum(l.amount for l in
 			                                rec.line_ids.filtered(lambda x: x.type_id.bonus_type == 'rewards'))
@@ -150,13 +156,14 @@ class HrBonusPenalty(models.Model):
 						})
 	
 	total_bonuses = fields.Float("Total Bonuses", compute=_get_total_bonus_penalty)
+	# Bonus Allowance
 	total_bonuses_allowance = fields.Float("Total Bonuses(Allowance)", compute=_get_total_bonus_penalty)
 	total_bonuses_rewards = fields.Float("Total Bonuses(Rewards)", compute=_get_total_bonus_penalty)
 	total_bonus_production = fields.Float("Production", compute=_get_total_bonus_penalty)
 	total_bonus_leadership = fields.Float("Leadership", compute=_get_total_bonus_penalty)
 	total_bonus_workshop = fields.Float("Workshop", compute=_get_total_bonus_penalty)
 	total_bonus_direction = fields.Float("Board of Direction", compute=_get_total_bonus_penalty)
-	
+	# Bonus Rewards
 	total_bonus_comp_off_site = fields.Float("Comp Off Site", compute=_get_total_bonus_penalty)
 	total_bonus_comp_off_home = fields.Float("Comp Off Home", compute=_get_total_bonus_penalty)
 	total_bonus_overtime_site = fields.Float("OverTime Site", compute=_get_total_bonus_penalty)
@@ -164,7 +171,9 @@ class HrBonusPenalty(models.Model):
 	total_bonus_vpp = fields.Float("VPP", compute=_get_total_bonus_penalty)
 	total_bonus_ramadan = fields.Float("Ramadan", compute=_get_total_bonus_penalty)
 	total_bonus_other = fields.Float("Other", compute=_get_total_bonus_penalty)
-	
+	total_bonus_night_shift = fields.Float("Night Shift", compute=_get_total_bonus_penalty)
+	total_bonus_leave_balance = fields.Float("Leave Balance", compute=_get_total_bonus_penalty)
+	# Penalties
 	total_penalties = fields.Float("Total Penalties", compute=_get_total_bonus_penalty)
 	total_penalty_absence = fields.Float("Absence", compute=_get_total_bonus_penalty)
 	total_penalty_other = fields.Float("Other", compute=_get_total_bonus_penalty)

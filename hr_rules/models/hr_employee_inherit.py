@@ -25,11 +25,16 @@ class HrEmployeeInherit(models.Model):
 
     remaining_leaves = fields.Float('Remaining Leaves', compute='_compute_remaining_leaves')
 
-    registration_number = fields.Char('Employee Number', readonly=True, select=True, copy=False)
+    registration_number = fields.Char('Employee Number', default='/', readonly=False, select=True, copy=False)
 
     @api.model
     def create(self, vals):
-        if vals.get('registration_number', '/') == '/':
+        """
+        Add new option to get sequence automatic of Employee number
+        :param vals:
+        :return:
+        """
+        if vals.get('registration_number') == '/':
                 vals['registration_number'] = self.env['ir.sequence'].next_by_code('employee.number') or '/'
         result = super(HrEmployeeInherit, self).create(vals)
 

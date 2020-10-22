@@ -133,7 +133,12 @@
                                     <field name="total_bonus_vpp" widget="monetary" attrs="{'invisible':[('bonus_type', '!=', 'rewards')]}"/>
                                     <field name="total_bonus_ramadan" widget="monetary" attrs="{'invisible':[('bonus_type', '!=', 'rewards')]}"/>
                                     <field name="total_bonus_other" widget="monetary" attrs="{'invisible':[('bonus_type', '!=', 'rewards')]}"/>
+                                    <field name="total_bonus_night_shift" widget="monetary" attrs="{'invisible':[('bonus_type', '!=', 'rewards')]}"/>
+                                    <field name="total_bonus_leave_balance" widget="monetary" attrs="{'invisible':[('bonus_type', '!=', 'rewards')]}"/>
+
                                     <field name="total_bonuses_rewards" widget="monetary" class="oe_subtotal_footer_separator" attrs="{'invisible':[('bonus_type', '!=', 'rewards')]}"/>
+
+
                                 </group>
                             </group>
                         </page>
