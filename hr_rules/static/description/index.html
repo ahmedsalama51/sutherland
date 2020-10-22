@@ -25,9 +25,9 @@
             <p class="oe_mt32">
                 <b style="color:blue">To be used on salary rule copy/past this on python code field on salary rule:</b><br>
             <P >
-                <b>lines = contract.allowance_ids/deduction_ids</b> <i style="color:green"># For getting the field we need</i><br/>
+                <b>lines = contract.allowance_ids.mapped('allowance_id.id')/contract.deduction_ids.mapped('deduction_id.id')</b> <i style="color:green"># For getting the field we need</i><br/>
                 <i style="color:green"># Then we will filter for the exact line using code.</i> <br/>
-                <b>line = lines.search([('id','in',lines.ids),('code','=','<i style="color:red;">CODE</i>')])</b><br/>
+                <b>line = lines.search([('id','in',lines),('code','=','<i style="color:red;">CODE</i>')])</b><br/>
                 <i style="color:green"># Then get exact amount of line</i> <br/>
                 <b>result = line and line.value or 0.0</b><br/>
             </P>
