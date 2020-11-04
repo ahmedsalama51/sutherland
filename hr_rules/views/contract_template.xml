@@ -1,5 +1,6 @@
 <odoo>
     <data>
+        <!-- Contract Template-->
         <record id="view_contract_template_form_field" model="ir.ui.view">
             <field name="name">contract.template.form</field>
             <field name="model">contract.template</field>
@@ -83,21 +84,6 @@
                                         <field name="value" sum="allowance"/>
                                     </tree>
                                 </field>
-                                <!--<field name="internal_transportation_value"/>-->
-                                <!--<field name="external_transportation_value"/>-->
-                                <!--<field name="veracity_value"/>-->
-                                <!--<field name="meal_value"/>-->
-                                <!--<field name="rest_allowance"/>-->
-                                <!--<field name="supervision_allowance"/>-->
-                                <!--<field name="security_days"/>-->
-                                <!--<field name="company_pay"/>-->
-                                <!--<field name="allowance_apecial"/>-->
-                                <!--<field name="allowance_1"/>-->
-                                <!--<field name="allowance_2"/>-->
-                                <!--<field name="allowance_3"/>-->
-                                <!--<field name="allowance_4"/>-->
-                                <!--<field name="allowance_5"/>-->
-                                <!--<field name="allowance_6"/>-->
                             </group>
                             <group name="deduction" string="Deduction">
                                 <field name="deduction_ids">
@@ -106,23 +92,13 @@
                                         <field name="value" readonly="1" sum="deductions"/>
                                     </tree>
                                 </field>
-
-                                <!--<field name="absence_value"/>-->
-                                <!--<field name="total_institution_Value"/>-->
-                                <!--<field name="house_deduction"/>-->
-                                <!--<field name="deduction_1"/>-->
-                                <!--<field name="deduction_2"/>-->
-                                <!--<field name="deduction_3"/>-->
-                                <!--<field name="allowance_7"/>-->
-                                <!--<field name="allowance_8"/>-->
                             </group>
-                            <!--                            <group name="incentive" string="Incentive">-->
-                            <!--<field name="effort_allowance"/>-->
-                            <!--<field name="manufacturing_allowance"/>-->
-                            <!--<field name="additional_allowance"/>-->
-                            <!--<field name="traveling_days"/>-->
-                            <!--<field name="transportation_expenses"/>-->
-                            <!--                            </group>-->
+                            <group name="static">
+                                <field name="basic"/>
+                                <field name="allowance"/>
+                                <field name="monthly_vpp"/>
+                                <field name="total_basic_allowance"/>
+                            </group>
                         </group>
                     </page>
                 </xpath>
@@ -135,7 +111,7 @@
             <field name="state">code</field>
             <field name="code">
                 if records:
-                    action = model.bulk_load_template()
+                action = model.bulk_load_template()
             </field>
             <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
             <field name="binding_view_types">list</field>

@@ -82,6 +82,11 @@ class HrContractInherit(models.Model):
 	
 	allowance_ids = fields.One2many('hr.contract.allowance.line', 'contract_id', 'Allowances')
 	deduction_ids = fields.One2many('hr.contract.deduction.line', 'contract_id', 'Deductions')
+	# static Fields
+	basic = fields.Float(string='Basic')
+	allowance = fields.Float(string='Allowance')
+	monthly_vpp = fields.Float(string='Monthly VPP ')
+	total_basic_allowance = fields.Float(string='Total Basic & Allowances')
 
 
 class ContractAllowanceLine(models.Model):
