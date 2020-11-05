@@ -97,6 +97,7 @@
                                 <field name="basic"/>
                                 <field name="allowance"/>
                                 <field name="monthly_vpp"/>
+                                <field name="health_insurance"/>
                                 <field name="total_basic_allowance"/>
                             </group>
                         </group>
