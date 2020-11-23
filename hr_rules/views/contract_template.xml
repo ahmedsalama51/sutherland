@@ -99,6 +99,7 @@
                                 <field name="monthly_vpp"/>
                                 <field name="health_insurance"/>
                                 <field name="total_basic_allowance"/>
+                                <field name="annual_vpp"/>
                             </group>
                         </group>
                     </page>
